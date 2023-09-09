@@ -9,12 +9,12 @@ struct PCB {
 };
 
 void roundRobin(struct PCB L[], int Q) {
-    int ti = Q / 4; // Tiempo de intercambio
-    int r = 0;      // Reloj
-    int sumatoria = 0; // Sumatoria de TS
+    float ti = Q / 4; // Tiempo de intercambio
+    float r = 0;      // Reloj
+    float sumatoria = 0; // Sumatoria de TS
     struct PCB pAnt = {0, 0}; // Proceso anterior
-    int *tiemposDeRetorno = (int *)calloc(CANTIDAD, sizeof(int));
-    int *tiemposDeEspera = (int*)calloc(CANTIDAD, sizeof(int));
+    float *tiemposDeRetorno = (float *)calloc(CANTIDAD, sizeof(float));
+    float *tiemposDeEspera = (float*)calloc(CANTIDAD, sizeof(float));
 
     for (int i = 0; i < CANTIDAD; i++) {
         sumatoria += L[i].TS;
@@ -35,7 +35,7 @@ void roundRobin(struct PCB L[], int Q) {
 
                 tiemposDeRetorno[i] = r; 
 
-                printf("L[%d], R: %d - TS: %d - Tiempo de Retorno: %d\n", L[i].PID, r, L[i].TS, tiemposDeRetorno[i]);
+                printf("L[%d], R: %.1f - TS: %d - Tiempo de Retorno: %.1f\n", L[i].PID, r, L[i].TS, tiemposDeRetorno[i]);
                 pAnt = L[i]; 
             }
         }
@@ -44,7 +44,7 @@ void roundRobin(struct PCB L[], int Q) {
     float sumaEspera = 0;
     for (int i = 0; i < CANTIDAD; i++){
       sumaPromedio += tiemposDeRetorno[i];
-      sumaEspera += (tiemposDeRetorno[i] - tiemposDeEspera[i]);
+      sumaEspera += (tiemposDeRetorno[i] - tiemposDeEspera[i]); 
     }
 
     printf("El promedio de todos los tiempos de retorno es: %.2f\n", sumaPromedio/CANTIDAD);
@@ -55,7 +55,7 @@ void roundRobin(struct PCB L[], int Q) {
 
 int main(){
   struct PCB round[CANTIDAD] = {
-    {1, 8}, {3, 1}, {5, 6}, {4, 9}, {2, 4}
+    {1, 8}, {3, 6}, {5, 4}, {4, 9}, {2, 1}
   };
 
   roundRobin(round, 3);
